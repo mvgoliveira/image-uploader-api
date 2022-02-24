@@ -1,0 +1,11 @@
+{
+  "name": "image-uploader-nodeJs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/mvgoliveira/image-uploader-nodeJs",
+  "author": "Marcus Oliveira <MARKUSVI17@GMAIL.COM>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
