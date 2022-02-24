@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
-import { ImageService } from "../services/ImageService";
 
 export class ImageController {
+  async getByName(req: Request, res: Response) {
+    const { name } = req.params;
+    
+    return res.sendFile(`/uploads/${name}`, { root: '.' });
+  }
+
   async uploadOne(req: Request, res: Response) {
     const image = req.file;
 
@@ -20,7 +25,7 @@ export class ImageController {
       let ImagesURL = [];
       
       ImagesArray.forEach(image => {
-        ImagesURL.push(`${image.destination}/${image.filename}`);
+        ImagesURL.push(`http://localhost:3333/${image.destination}/${image.filename}`);
       });
 
       return res.json({ImagesURL});

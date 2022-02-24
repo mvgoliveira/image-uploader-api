@@ -10,6 +10,8 @@ const upload = multer(uploadImage.getConfig);
 
 const imageController = new ImageController();
 
+routes.get('/uploads/:name', imageController.getByName);
+
 routes.post('/image', upload.single('picture'), imageController.uploadOne);
 
 routes.post('/images', upload.array('pictures', 10), imageController.uploadMultiples);
