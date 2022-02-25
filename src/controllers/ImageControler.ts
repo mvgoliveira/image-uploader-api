@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ImageService } from "../services/ImageService";
 
 export class ImageController {
   async getByName(req: Request, res: Response) {
@@ -8,27 +9,34 @@ export class ImageController {
   }
 
   async uploadOne(req: Request, res: Response) {
+    const imageService = new ImageService();
     const image = req.file;
 
-    if (image) {
-      return res.json({ url_image: `http://localhost:3333/${image.destination}/${image.filename}` });
-    }
+    const imageURL = await imageService.uploadOne(image);
+
+    return res.json({imageURL});
   }
 
   async uploadMultiples(req: Request, res: Response) {
+    const imageService = new ImageService();
     const images = req.files;
-    const ImagesArray = JSON.parse(JSON.stringify(images));
-
     
-    if (images) {
+    const imagesURL = await imageService.uploadMultiples(
+      JSON.parse(JSON.stringify(images))
+      );
       
-      let ImagesURL = [];
-      
-      ImagesArray.forEach(image => {
-        ImagesURL.push(`http://localhost:3333/${image.destination}/${image.filename}`);
-      });
+      return res.json({imagesURL});
+    }
+    
+    async removeImage(req: Request, res: Response) {
+      const { imgName } = req.params;
+      const imageService = new ImageService();
 
-      return res.json({ImagesURL});
+      try {
+        const result = await imageService.removeImage(imgName);
+        return res.json({message: result});
+      } catch (error) {
+        return res.status(400).json({error: error.message});
+      }
     }
   }
-}
