@@ -22,11 +22,8 @@ export class  UploadImage {
 
       //Renomeia o arquivo
       filename: (req, file, cb) => {
-        //Checa o tipo do arquivo
-        const type = mime.extension(file.mimetype);
-
         //renomeia o arquivo
-        cb(null, `${new Date().getTime()}.${type}`);
+        cb(null, `${req.params.name}.png`);
       }
     });
   }
